@@ -348,16 +348,21 @@ class Player {
 		let self = this;
 		return new Promise(resolve => {
 			let storageId = 'youtube-' + self.id;
-			browser.storage.local.get({
-				[storageId]: ''
-			}, function (result) {
-				if (result[storageId] !== '') {
+			console.log(typeof (storageId));
+			browser.storage.local.get({[storageId]: ''}, function (r) {
+				console.log("Trigg1");
+				console.log(r);
+				if (r[storageId] !== "") {
+					console.log("Trigg22");
+					let result = JSON.parse(r[storageId]);
 					let response = {
-						timestamps: result[storageId].timestamps,
-						types: result[storageId].types
+						timestamps: result.timestamps,
+						types: result.types
 					};
+					console.log("Found some data");
 					resolve(response || {});
 				} else {
+					console.log("Found none");
 					resolve({});
 				}
 			});

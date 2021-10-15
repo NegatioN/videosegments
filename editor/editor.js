@@ -828,7 +828,7 @@ class Editor {
 		let video_id = 'youtube-' + this.id;
 		if (this.segmentation.types.length === 0) {
 			// remove it from local database 
-			browser.storage.local.remove([video_id], () => {
+			browser.storage.local.remove(video_id, () => {
 				this.setSegmentationOrigin('deleted');
 			});
 
@@ -859,9 +859,7 @@ class Editor {
 			}
 			segmentation.timestamps.pop(); // remove last 
 
-			browser.storage.local.set({
-				[video_id]: segmentation
-			}, () => {
+			browser.storage.local.set({[video_id]: JSON.stringify(segmentation)}, () => {
 				this.updateIterationsCount();
 			});
 
